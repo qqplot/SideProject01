@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if welcome %}
+  그냥 할말이 있었어요.
+  <em style="color: green; font-size: 2em;">{{welcome}}</em>
+{% else %}
+  <em>Hello</em>, world!
+{% endif %}
+
+{% endblock %}

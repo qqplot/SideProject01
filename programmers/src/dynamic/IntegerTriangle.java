@@ -1,77 +1,41 @@
 package dynamic;
 
+
 class IntegerTriangle {
+
+	int[][] cache = new int[500][500];
+
 	public int solution(int[][] triangle) {
-		int answer = 0;
-
-		int maxValue = 0;
-		int startFloor = 0;
-		int startPoint = 0;
-
-		for (int i = 0; i < triangle.length; i++) {
-			int[] floor = triangle[i];
-			for (int j = 0; j < floor.length; j++) {
-				int num = floor[j];
-				if (num >= maxValue) {
-					maxValue = num;
-					startFloor = i;
-					startPoint = j;
+		
+		int answer = this.findNode(triangle, 0, 0);
+		for(int i=0;i< 500; i++) {
+			for(int j=0;j<500;j++) {
+				if(cache[i][j] != 0) {
+					System.out.println("i: " + i +", j:"+j +", sum: " + cache[i][j]);
 				}
 			}
 		}
-
-//		System.out.println("maxValue: " + maxValue + ", startFloor: " + startFloor + ", startPoint: " + startPoint);
-
-		answer = this.findNode(triangle, startFloor, startPoint);
-
+			
 		return answer;
 	}
 
 	private int findNode(int[][] triangle, int startFloor, int startPoint) {
 
-		int upResult = 0;
-		int downResult = 0;
-		int currentPoint = startPoint;
+		// 기저 사례: 마지막 층에 도착했을 때
+		if (startFloor == triangle.length - 1)
+			return triangle[startFloor][startPoint];
 
-		// up
-		for (int f = startFloor; f >= 0; f--) {
-			int[] curruentFloor = triangle[f];
-			upResult += curruentFloor[currentPoint];
+		// 메모이제이션
+		int ret = this.cache[startFloor][startPoint];
+		if(ret != 0)
+			return ret;
+		
+		ret = Math.max(findNode(triangle, startFloor + 1, startPoint + 1),
+				findNode(triangle, startFloor + 1, startPoint)) + triangle[startFloor][startPoint];
+		
+		this.cache[startFloor][startPoint] = ret;
+		return ret;
 
-			if (f == 0)
-				break;
-
-			int[] nextFloor = triangle[f - 1];
-			if (currentPoint == 0) {
-				continue;
-			}
-			if (nextFloor[currentPoint - 1] > nextFloor[currentPoint]) {
-				currentPoint--;
-			}
-		}
-
-		// down
-		currentPoint = startPoint; // reset
-		for (int f = startFloor; f < triangle.length; f++) {
-
-			int[] curruentFloor = triangle[f];
-
-			downResult += curruentFloor[currentPoint];
-
-			if (f == triangle.length - 1)
-				break;
-
-			int[] nextFloor = triangle[f + 1];
-			if (nextFloor[currentPoint + 1] > nextFloor[currentPoint]) {
-				currentPoint++;
-			}
-		} // for
-
-//		System.out.println("up result: " + upResult);
-//		System.out.println("down result: " + downResult);
-
-		// up & down 스타팅이 겹치므로 한번 빼줘야 한다.
-		return upResult + downResult - triangle[startFloor][startPoint];
 	}
 
 }

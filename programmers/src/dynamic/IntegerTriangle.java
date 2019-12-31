@@ -8,13 +8,13 @@ class IntegerTriangle {
 	public int solution(int[][] triangle) {
 		
 		int answer = this.findNode(triangle, 0, 0);
-		for(int i=0;i< 500; i++) {
-			for(int j=0;j<500;j++) {
-				if(cache[i][j] != 0) {
-					System.out.println("i: " + i +", j:"+j +", sum: " + cache[i][j]);
-				}
-			}
-		}
+//		for(int i=0;i< 500; i++) {
+//			for(int j=0;j<500;j++) {
+//				if(cache[i][j] != 0) {
+//					System.out.println("i: " + i +", j:"+j +", sum: " + cache[i][j]);
+//				}
+//			}
+//		}
 			
 		return answer;
 	}

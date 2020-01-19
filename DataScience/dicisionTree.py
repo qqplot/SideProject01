@@ -95,7 +95,7 @@ def main():
         ax11.set_xlabel('age')
         ax11.set_ylabel('month')
         ax11.set_zlabel('wake up time')
-       ax11.set_xlim3d(age_min, age_max)
+        ax11.set_xlim3d(age_min, age_max)
         ax11.set_ylim3d(month_min, month_max)
         ax11.set_zlim3d(time_min, time_max)
 
